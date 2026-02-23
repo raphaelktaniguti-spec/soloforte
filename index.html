@@ -692,58 +692,6 @@
   @media (max-width: 600px) { .carrossel-slide { flex: 0 0 100%; min-width: 100%; } }
   @media (min-width: 601px) and (max-width: 900px) { .carrossel-slide { flex: 0 0 calc(50% - 6px); min-width: calc(50% - 6px); } }
 
-  /* ── FAIXA DE MARCAS ── */
-  .marcas-strip {
-    background: #111;
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
-    padding: 18px 0;
-    overflow: hidden;
-    position: relative;
-  }
-  .marcas-strip::before,
-  .marcas-strip::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 80px;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .marcas-strip::before { left: 0; background: linear-gradient(to right, #111, transparent); }
-  .marcas-strip::after  { right: 0; background: linear-gradient(to left, #111, transparent); }
-  .marcas-track {
-    display: flex;
-    align-items: center;
-    gap: 60px;
-    animation: scroll-marcas 22s linear infinite;
-    width: max-content;
-  }
-    @keyframes scroll-marcas {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  .marca-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.85;
-    transition: opacity 0.3s, filter 0.3s;
-    flex-shrink: 0;
-  }
-  .marca-item:hover {
-    opacity: 1;
-    opacity: 1;
-  }
-  .marca-item svg { height: 38px; width: auto; }
-
-  .marca-item--dark {
-    background: #222;
-    border-radius: 6px;
-    padding: 6px 14px;
-  }
-  .marca-item img { height: 44px; width: auto; }
-
   /* ── RODAPÉ ── */
   footer {
     background: var(--darkgray);
@@ -1749,4 +1697,5 @@ function atualizarWA(prefix) {
 </body>
 
 </html>
+
 
