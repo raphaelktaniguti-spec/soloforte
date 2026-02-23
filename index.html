@@ -675,22 +675,84 @@
   .whatsapp-float img { width: 36px; height: 36px; }
 
   /* ── CARROSSEL DE ESTOQUE ── */
-  .carrossel-section { margin-top: 36px; width: 100%; }
-  .carrossel-titulo { font-size: 1.1rem; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; text-align: center; }
-  .carrossel-wrapper { position: relative; overflow: hidden; border-radius: 12px; }
-  .carrossel-track { display: flex; gap: 12px; transition: transform 0.45s cubic-bezier(.4,0,.2,1); will-change: transform; }
-  .carrossel-slide { flex: 0 0 calc(33.333% - 8px); min-width: calc(33.333% - 8px); border-radius: 10px; overflow: hidden; background: #1a1a1a; aspect-ratio: 4/3; position: relative; }
-  .carrossel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+  .carrossel-section {
+    margin-top: 36px;
+    width: 100%;
+  }
+  .carrossel-titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .carrossel-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .carrossel-track {
+    display: flex;
+    gap: 12px;
+    transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+  .carrossel-slide {
+    flex: 0 0 calc(33.333% - 8px);
+    min-width: calc(33.333% - 8px);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #1a1a1a;
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+  .carrossel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
   .carrossel-slide:hover img { transform: scale(1.05); }
-  .carrossel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.2s; backdrop-filter: blur(4px); }
+  .carrossel-btn {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: #fff;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+    transition: background 0.2s;
+    backdrop-filter: blur(4px);
+  }
   .carrossel-btn:hover { background: var(--green); }
   .carrossel-btn.prev { left: 8px; }
   .carrossel-btn.next { right: 8px; }
-  .carrossel-dots { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
-  .carrossel-dot { width: 7px; height: 7px; border-radius: 50%; background: #444; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+  .carrossel-dots {
+    display: flex; gap: 6px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .carrossel-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #444;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
   .carrossel-dot.active { background: var(--green); transform: scale(1.3); }
-  @media (max-width: 600px) { .carrossel-slide { flex: 0 0 100%; min-width: 100%; } }
-  @media (min-width: 601px) and (max-width: 900px) { .carrossel-slide { flex: 0 0 calc(50% - 6px); min-width: calc(50% - 6px); } }
+  @media (max-width: 600px) {
+    .carrossel-slide { flex: 0 0 100%; min-width: 100%; }
+  }
+  @media (min-width: 601px) and (max-width: 900px) {
+    .carrossel-slide { flex: 0 0 calc(50% - 6px); min-width: calc(50% - 6px); }
+  }
 
   /* ── RODAPÉ ── */
   footer {
@@ -771,6 +833,15 @@
     <div class="tagline">Soloforte Peças e Componentes Agrícolas</div>
   </div>
 </header>
+
+<div class="category-tabs">
+  <button class="cat-tab active" onclick="switchCategory('sobre')">🌿 Sobre Nós</button>
+  <button class="cat-tab" onclick="switchCategory('discos')">⚙ Discos</button>
+  <button class="cat-tab" onclick="switchCategory('mancais')">🔩 Mancais</button>
+  <button class="cat-tab" onclick="switchCategory('eixos')">🔧 Eixos</button>
+</div>
+
+<main>
 
   <!-- ════════ DISCOS ════════ -->
   <div id="cat-discos" class="hidden">
@@ -1219,33 +1290,44 @@
 // ── CARROSSEL ──
 (function() {
   var track, dotsContainer, totalSlides, current = 0;
-  function spv() { return window.innerWidth<=600?1:window.innerWidth<=900?2:3; }
+
+  function getSlidesPerView() {
+    return window.innerWidth <= 600 ? 1 : window.innerWidth <= 900 ? 2 : 3;
+  }
+
   function init() {
     track = document.getElementById('carrosselTrack');
     dotsContainer = document.getElementById('carrosselDots');
     if (!track) return;
     totalSlides = track.querySelectorAll('.carrossel-slide').length;
-    var pages = Math.ceil(totalSlides/spv());
+    var pages = Math.ceil(totalSlides / getSlidesPerView());
     dotsContainer.innerHTML = '';
-    for (var i=0;i<pages;i++) {
-      var d=document.createElement('div');
-      d.className='carrossel-dot'+(i===0?' active':'');
-      d.setAttribute('data-idx',i);
-      d.onclick=function(){goTo(parseInt(this.getAttribute('data-idx')));};
-      dotsContainer.appendChild(d);
+    for (var i = 0; i < pages; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'carrossel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('data-idx', i);
+      dot.onclick = function() { goTo(parseInt(this.getAttribute('data-idx'))); };
+      dotsContainer.appendChild(dot);
     }
     goTo(0);
   }
-  function goTo(p) {
-    var v=spv(), pages=Math.ceil(totalSlides/v);
-    current=((p%pages)+pages)%pages;
-    var w=track.querySelector('.carrossel-slide').offsetWidth+12;
-    track.style.transform='translateX(-'+(current*v*w)+'px)';
-    dotsContainer.querySelectorAll('.carrossel-dot').forEach(function(d,i){d.classList.toggle('active',i===current);});
+
+  function goTo(page) {
+    var spv = getSlidesPerView();
+    var pages = Math.ceil(totalSlides / spv);
+    current = ((page % pages) + pages) % pages;
+    var slideEl = track.querySelector('.carrossel-slide');
+    var slideWidth = slideEl.offsetWidth + 12;
+    track.style.transform = 'translateX(-' + (current * spv * slideWidth) + 'px)';
+    dotsContainer.querySelectorAll('.carrossel-dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+    });
   }
-  window.carrosselMover=function(dir){goTo(current+dir);};
-  document.addEventListener('DOMContentLoaded',init);
-  window.addEventListener('resize',init);
+
+  window.carrosselMover = function(dir) { goTo(current + dir); };
+
+  document.addEventListener('DOMContentLoaded', init);
+  window.addEventListener('resize', function() { init(); });
 })();
 
 const WA_NUMBER = '5516991797873';
@@ -1556,7 +1638,7 @@ function atualizarWA(prefix) {
 
       <div class="footer-col">
         <h3>Soloforte</h3>
-        <p>Fundada em 2016, nascemos para ser o elo de confiança entre as grandes marcas de componentes agrícolas e o produtor rural. Especialistas em implementos, discos, eixos e mancais, focamos em oferecer um estoque estratégico para pronta entrega, garantindo que a peça certa chegue ao campo no momento exato. Nossa missão é unir a tradição das melhores fabricantes com o atendimento ágil que a agricultura moderna demanda.</p>
+        <p>Peças e componentes agrícolas de alta qualidade para garantir a máxima performance no campo.</p>
       </div>
 
       <div class="footer-col">
@@ -1618,7 +1700,7 @@ function atualizarWA(prefix) {
     </button>
   </div>
 
-   <a href="https://wa.me/5516991797873?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20peças%20agrícolas."
+  <a href="https://wa.me/5516991797873?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20peças%20agrícolas."
      class="whatsapp-float"
      target="_blank"
      title="Fale conosco no WhatsApp">
@@ -1628,6 +1710,3 @@ function atualizarWA(prefix) {
 </body>
 
 </html>
-
-
-
